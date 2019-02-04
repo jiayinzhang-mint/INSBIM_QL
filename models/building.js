@@ -8,5 +8,10 @@ const buildingSchema = new Schema({
   device: []
 });
 
-const buildingModel = mongoose.model("building", buildingSchema);
-export default buildingModel
+const Building = mongoose.model("building", buildingSchema);
+
+class Building {
+
+}
+
+export default Building

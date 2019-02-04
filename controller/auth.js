@@ -1,7 +1,5 @@
-import userModel from "../models/user"
+import userModel from "../models/user";
 
-class authController {
+class authController {}
 
-}
-
-export default authController
+export default authController;
