@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 // schema
-const buildingSchema = new Schema({
+const storeySchema = new Schema({
   block: String,
   floor: Number,
   device: [],
@@ -13,6 +13,6 @@ const buildingSchema = new Schema({
   }
 });
 
-const Building = mongoose.model("building", buildingSchema);
+const Storey = mongoose.model("floor", storeySchema);
 
-export default Building;
+export default Storey;

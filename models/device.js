@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const deviceSchema = new Schema({
   name: String,
   type: String,
-  building: String,
+  storey: String,
   brand: String,
   desc: String,
   createTime: {
