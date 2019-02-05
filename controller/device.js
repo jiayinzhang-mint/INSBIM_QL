@@ -1,6 +1,5 @@
 import createError from "http-errors";
 import Device from "../models/device";
-import { type } from "os";
 
 class deviceController {
   static async createDevice(req, res, next) {
@@ -8,6 +7,8 @@ class deviceController {
     var device = new Device();
     device.name = request.name;
     device.type = request.type;
+    if (request.brand) device.brand = request.brand;
+    if (request.desc) device.desc = request.desc;
     if (request.building) device.building = request.building;
     try {
       await device.save();
@@ -21,7 +22,7 @@ class deviceController {
   static async getDevice(req, res, next) {
     const id = req.params.id;
     try {
-      const device = await Device.findById(id, "name type building");
+      const device = await Device.findById(id, "name type building brand desc");
       return res.status(200).json({ msg: "success", device: device });
     } catch (err) {
       err = createError(500, err);
@@ -36,7 +37,7 @@ class deviceController {
     if (request.type) query.type = request.type;
 
     try {
-      var deviceList = await Device.find(query, "name type building");
+      var deviceList = await Device.find(query, "name type building brand");
       return res.status(200).json({ msg: "success", deviceList: deviceList });
     } catch (err) {
       err = createError(500, err);
@@ -49,6 +50,8 @@ class deviceController {
     var query = {};
     if (request.name) query.name = request.name;
     if (request.type) query.type = request.type;
+    if (request.type) query.desc = request.desc;
+    if (request.type) query.brand = request.brand;
     if (request.building) query.building = request.building;
     try {
       const device = await Device.findByIdAndUpdate(request.id, query, {

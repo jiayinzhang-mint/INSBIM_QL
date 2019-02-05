@@ -14,6 +14,10 @@ const userSchema = new Schema({
     lowercase: true,
     index: true
   },
+  createTime: {
+    type: String,
+    default: Date.now()
+  },
   mobile: String,
   name: String,
   salt: String,

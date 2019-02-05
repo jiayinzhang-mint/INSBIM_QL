@@ -6,7 +6,11 @@ const Schema = mongoose.Schema;
 const buildingSchema = new Schema({
   block: String,
   floor: Number,
-  device: []
+  device: [],
+  createTime: {
+    type: String,
+    default: Date.now()
+  }
 });
 
 const Building = mongoose.model("building", buildingSchema);

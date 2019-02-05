@@ -7,7 +7,20 @@ const deviceSchema = new Schema({
   name: String,
   type: String,
   building: String,
-  data: []
+  brand: String,
+  desc: String,
+  createTime: {
+    type: String,
+    default: Date.now()
+  },
+  data: [
+    {
+      createTime: {
+        type: String,
+        default: Date.now()
+      }
+    }
+  ]
 });
 
 const Device = mongoose.model("device", deviceSchema);
