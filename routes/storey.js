@@ -18,7 +18,7 @@ router.get("/", auth.required, async (req, res, next) => {
   storeyController.getStoreyList(req, res, next);
 });
 
-router.get("/:id", auth.required, async (req, res, next) => {
+router.get("/:storeyId", auth.required, async (req, res, next) => {
   if (!role.isAdmin(req.payload.username)) {
     return createError(403, "No permission.");
   }

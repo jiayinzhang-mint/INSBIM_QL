@@ -11,7 +11,7 @@ router.post("/", auth.required, async (req, res, err) => {
   deviceController.createDevice(req, res, err);
 });
 
-router.get("/:id", auth.required, async (req, res, err) => {
+router.get("/:deviceId", auth.required, async (req, res, err) => {
   if (!role.isAdmin(req.payload.username)) {
     return createError(403, "No permission.");
   }

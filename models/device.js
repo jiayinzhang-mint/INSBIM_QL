@@ -7,6 +7,7 @@ const deviceSchema = new Schema({
   name: String,
   type: String,
   storey: String,
+  block: String,
   brand: String,
   desc: String,
   createTime: {

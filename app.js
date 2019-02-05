@@ -37,10 +37,12 @@ app.use(express.static(path.join(__dirname, "public")));
 // router
 import indexRouter from "./routes/index";
 import userRouter from "./routes/user";
+import blockRouter from "./routes/block";
 import storeyRouter from "./routes/storey";
 import deviceRouter from "./routes/device";
 app.use("/", indexRouter);
 app.use("/user", userRouter);
+app.use("/block", blockRouter);
 app.use("/storey", storeyRouter);
 app.use("/device", deviceRouter);
 

@@ -6,13 +6,12 @@ const Schema = mongoose.Schema;
 const storeySchema = new Schema({
   block: String,
   floor: Number,
-  device: [],
   createTime: {
     type: String,
     default: Date.now()
   }
 });
 
-const Storey = mongoose.model("floor", storeySchema);
+const Storey = mongoose.model("storey", storeySchema);
 
 export default Storey;
