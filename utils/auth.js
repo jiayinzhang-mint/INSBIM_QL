@@ -4,7 +4,7 @@ import secret from "../config/secret";
 const getTokenFromHeaders = req => {
   if (
     req.headers.authorization &&
-    req.headers.authorization.split(" ")[0] === "Token"
+    req.headers.authorization.split(" ")[0] === "INSBIM"
   ) {
     return req.headers.authorization.split(" ")[1];
   }

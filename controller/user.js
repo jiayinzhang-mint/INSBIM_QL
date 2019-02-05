@@ -1,13 +1,8 @@
-import mongoose from "mongoose";
 import User from "../models/user";
 import passport from "passport";
-import role from "../utils/role";
 
 class userController {
   static async createUser(req, res, next) {
-    if (!role.isAdmin(req.payload.username)) {
-      return res.status(403).json({ msg: "noPermission" });
-    }
     const request = req.body;
     var user = new User();
     user.username = request.username;
@@ -47,9 +42,6 @@ class userController {
   }
 
   static async deleteUser(req, res, next) {
-    if (!role.isAdmin(req.payload.username)) {
-      return res.status(403).json({ msg: "noPermission" });
-    }
     const request = req.body;
     try {
       await User.findByIdAndDelete(request.id);

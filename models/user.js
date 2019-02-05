@@ -6,7 +6,7 @@ import secret from "../config/secret";
 const Schema = mongoose.Schema;
 
 // schema
-var userSchema = new Schema({
+const userSchema = new Schema({
   username: {
     type: String,
     unique: true,
