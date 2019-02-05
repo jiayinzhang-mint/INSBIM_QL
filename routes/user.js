@@ -5,10 +5,9 @@ import userController from "../controller/user";
 
 var router = Router();
 
-
 router.post("/", auth.required, async (req, res, next) => {
   if (!role.isAdmin(req.payload.username)) {
-    return res.status(403).json({ msg: "noPermission" });
+    return createError(403, "No permission.");
   }
   userController.createUser(req, res, next);
 });
@@ -19,7 +18,7 @@ router.put("/", auth.required, async (req, res, next) => {
 
 router.delete("/", auth.required, async (req, res, next) => {
   if (!role.isAdmin(req.payload.username)) {
-    return res.status(403).json({ msg: "noPermission" });
+    return createError(403, "No permission.");
   }
   userController.deleteUser(req, res, next);
 });

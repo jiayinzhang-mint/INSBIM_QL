@@ -38,9 +38,11 @@ app.use(express.static(path.join(__dirname, "public")));
 import indexRouter from "./routes/index";
 import userRouter from "./routes/user";
 import buildingRouter from "./routes/building";
+import deviceRouter from "./routes/device";
 app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/building", buildingRouter);
+app.use("/device", deviceRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

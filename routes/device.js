@@ -1,35 +1,35 @@
 import { Router } from "express";
 import role from "../utils/role";
 import auth from "../utils/auth";
-import buildController from "../controller/building";
+import deviceController from "../controller/device";
 var router = Router();
 
-router.post("/", auth.required, async (req, res, next) => {
+router.post("/", auth.required, async (req, res, err) => {
   if (!role.isAdmin(req.payload.username)) {
     return createError(403, "No permission.");
   }
-  buildController.createBuilding(req, res, next);
+  deviceController.createDevice(req, res, err);
 });
 
-router.get("/", auth.required, async (req, res, next) => {
+router.get("/:id", auth.required, async (req, res, err) => {
   if (!role.isAdmin(req.payload.username)) {
     return createError(403, "No permission.");
   }
-  buildController.getBuildingList(req, res, next);
+  deviceController.getDevice(req, res, err);
 });
 
-router.get("/:id", auth.required, async (req, res, next) => {
+router.get("/", auth.required, async (req, res, err) => {
   if (!role.isAdmin(req.payload.username)) {
     return createError(403, "No permission.");
   }
-  buildController.getBuilding(req, res, next);
+  deviceController.getDeviceList(req, res, err);
 });
 
-router.delete("/", auth.required, async (req, res, next) => {
+router.put("/", auth.required, async (req, res, err) => {
   if (!role.isAdmin(req.payload.username)) {
     return createError(403, "No permission.");
   }
-  buildController.deleteBuilding(req, res, next);
+  deviceController.updateDevice(req, res, err);
 });
 
 export default router;

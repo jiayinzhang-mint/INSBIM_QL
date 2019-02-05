@@ -1,3 +1,4 @@
+import createError from "http-errors";
 import User from "../models/user";
 import passport from "passport";
 
@@ -13,6 +14,7 @@ class userController {
       await user.save();
       return res.status(200).json({ msg: "success", user: user.toAuthJSON() });
     } catch (err) {
+      err = createError(500, err);
       return next(err);
     }
   }
@@ -21,22 +23,19 @@ class userController {
     const request = req.body;
     var user = await User.findById(request.id);
     if (!user) {
-      console.log(user);
       return res.sendStatus(401);
     }
-    if (typeof request.name !== "undefined") {
-      user.name = request.name;
-    }
-    if (typeof request.mobile !== "undefined") {
-      user.mobile = request.mobile;
-    }
+    if (typeof request.name !== "undefined") user.name = request.name;
+    if (typeof request.mobile !== "undefined") user.mobile = request.mobile;
     if (typeof request.password !== "undefined") {
       user.setPassword(request.password);
     }
+
     try {
       await user.save();
       return res.status(200).json({ msg: "success", user: user.toAuthJSON() });
     } catch (err) {
+      err = createError(500, err);
       return next(err);
     }
   }
@@ -47,6 +46,7 @@ class userController {
       await User.findByIdAndDelete(request.id);
       return res.status(200).json({ msg: "success" });
     } catch (err) {
+      err = createError(500, err);
       return next(err);
     }
   }
@@ -54,6 +54,7 @@ class userController {
   static async login(req, res, next) {
     passport.authenticate("local", { session: false }, (err, user, info) => {
       if (err) {
+        err = createError(500, err);
         return next(err);
       }
       if (user) {
@@ -62,7 +63,7 @@ class userController {
           .status(200)
           .json({ msg: "success", user: user.toAuthJSON() });
       } else {
-        return res.status(422).json(info);
+        return next(createError(422, info));
       }
     })(req, res, next);
   }
