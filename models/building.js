@@ -1,17 +1,14 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
 // schema
 const buildingSchema = new Schema({
-  name: String,
+  block: String,
+  floor: Number,
   device: []
 });
 
 const Building = mongoose.model("building", buildingSchema);
 
-class Building {
-
-}
-
-export default Building
+export default Building;
