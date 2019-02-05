@@ -1,6 +1,5 @@
 import createError from "http-errors";
 import Device from "../models/device";
-import storeyController from "../controller/storey";
 class deviceController {
   static async createDevice(req, res, next) {
     const request = req.body;
