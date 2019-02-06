@@ -1,6 +1,7 @@
 import createError from "http-errors";
 import Device from "../models/device";
 import xlsx from "node-xlsx";
+import path from "path";
 
 class deviceController {
   static async createDevice(req, res, next) {
@@ -99,8 +100,14 @@ class deviceController {
       path: file.path
     };
 
+    const basePath = path.resolve(__dirname, "../upload/tmp/") + "/";
+    const xlsxPath = basePath + fileInfo.name;
+    const workBook = await xlsx.parse(xlsxPath);
+
     // 接收文件成功后返回数据给前端
-    return res.status(200).json({ msg: "success", fileInfo: fileInfo });
+    return res
+      .status(200)
+      .json({ msg: "success", fileInfo: fileInfo, workBook: workBook });
   }
 }
 export default deviceController;
