@@ -44,6 +44,8 @@ router.delete("/", auth.required, async (req, res, err) => {
 
 // func
 
+// import deviceList by xlsx
+
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
     // config file path

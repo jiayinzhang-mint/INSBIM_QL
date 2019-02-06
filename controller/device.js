@@ -102,10 +102,8 @@ class deviceController {
       size: file.size,
       path: file.path
     };
-
     const basePath = path.resolve(__dirname, "../upload/tmp/") + "/";
     const xlsxPath = basePath + fileInfo.name;
-
     try {
       const workBook = await xlsx.parse(xlsxPath);
       const workSheet = workBook[0].data;
@@ -119,8 +117,6 @@ class deviceController {
       }
       await deleteFile(xlsxPath);
       await Device.insertMany(deviceList);
-
-      // 接收文件成功后返回数据给前端
       return res
         .status(200)
         .json({ msg: "success", fileInfo: fileInfo, deviceList: deviceList });
