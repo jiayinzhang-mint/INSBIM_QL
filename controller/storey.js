@@ -10,7 +10,7 @@ class storeyController {
     storey.floor = Number(request.floor);
     try {
       await storey.save();
-      return res.status(200).json({ msg: "success", storey: storey });
+      return res.status(200).json({ msg: "success", data: { storey: storey } });
     } catch (err) {
       err = createError(500, err);
       return next(err);
@@ -23,9 +23,12 @@ class storeyController {
     if (request.block) query.block = request.block;
     try {
       const storeyList = await Storey.find(query, "block floor");
-      return res
-        .status(200)
-        .json({ msg: "success", storeyList: arrUtil.groupArr(storeyList, "block") });
+      return res.status(200).json({
+        msg: "success",
+        data: {
+          storeyList: arrUtil.groupArr(storeyList, "block")
+        }
+      });
     } catch (err) {
       err = createError(500, err);
       return next(err);
@@ -36,7 +39,7 @@ class storeyController {
     const storeyId = req.params.storeyId;
     try {
       const storey = await Storey.findById(storeyId);
-      return res.status(200).json({ msg: "success", storey: storey });
+      return res.status(200).json({ msg: "success", data: { storey: storey } });
     } catch (err) {
       err = createError(500, err);
       return next(err);

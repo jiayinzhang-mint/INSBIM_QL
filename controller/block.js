@@ -13,7 +13,7 @@ class blockController {
     try {
       await block.save();
       await storeyController.createStoreyForNewBlock(block);
-      return res.status(200).json({ msg: "success", block: block });
+      return res.status(200).json({ msg: "success", data: { block: block } });
     } catch (err) {
       err = createError(500, err);
       return next(err);
@@ -30,7 +30,7 @@ class blockController {
       var block = await Block.findByIdAndUpdate(request.id, query, {
         new: true
       });
-      return res.status(200).json({ msg: "success", block: block });
+      return res.status(200).json({ msg: "success", data: { block: block } });
     } catch (err) {
       err = createError(500, err);
       return next(err);

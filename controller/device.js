@@ -20,7 +20,7 @@ class deviceController {
     }
     try {
       await device.save();
-      return res.status(200).json({ msg: "success", device: device });
+      return res.status(200).json({ msg: "success", data: { device: device } });
     } catch (err) {
       err = createError(500, err);
       return next(err);
@@ -34,7 +34,7 @@ class deviceController {
         deviceId,
         "name type storey brand desc"
       );
-      return res.status(200).json({ msg: "success", device: device });
+      return res.status(200).json({ msg: "success", data: { device: device } });
     } catch (err) {
       err = createError(500, err);
       return next(err);
@@ -50,7 +50,9 @@ class deviceController {
 
     try {
       var deviceList = await Device.find(query, "name type brand block storey");
-      return res.status(200).json({ msg: "success", deviceList: deviceList });
+      return res
+        .status(200)
+        .json({ msg: "success", data: { deviceList: deviceList } });
     } catch (err) {
       err = createError(500, err);
       return next(err);
@@ -70,7 +72,7 @@ class deviceController {
     }
     try {
       const device = await Device.findByIdAndUpdate(request.deviceId, query);
-      return res.status(200).json({ msg: "success", device: device });
+      return res.status(200).json({ msg: "success", data: { device: device } });
     } catch (err) {
       err = createError(500, err);
       return next(err);
@@ -119,7 +121,10 @@ class deviceController {
       await Device.insertMany(deviceList);
       return res
         .status(200)
-        .json({ msg: "success", fileInfo: fileInfo, deviceList: deviceList });
+        .json({
+          msg: "success",
+          data: { fileInfo: fileInfo, deviceList: deviceList }
+        });
     } catch (err) {
       err = createError(500, err);
       return next(err);
