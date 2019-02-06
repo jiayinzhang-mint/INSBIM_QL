@@ -17,6 +17,7 @@ class storeyController {
   }
 
   static async getStoreyList(req, res, next) {
+    const request = req.body;
     var query = {};
     if (request.block) query.block = request.block;
     try {
