@@ -1,6 +1,3 @@
-var map = [];
-var newArr = [];
-
 class arrUtil {
   static isInArr(e, arr) {
     if (arr.indexOf(e) > -1) {
@@ -10,6 +7,8 @@ class arrUtil {
   }
 
   static groupArr(arr, label) {
+    var map = [];
+    var newArr = [];
     for (let i = 0; i < arr.length; i++) {
       if (!this.isInArr(arr[i][label], map)) {
         map.push(arr[i][label]);
@@ -22,6 +21,7 @@ class arrUtil {
         }
       }
     }
+    return newArr;
   }
 }
 // arrUtil.groupArr(arr, "date");
