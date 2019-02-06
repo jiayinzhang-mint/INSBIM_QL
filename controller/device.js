@@ -1,5 +1,7 @@
 import createError from "http-errors";
 import Device from "../models/device";
+import xlsx from "node-xlsx";
+
 class deviceController {
   static async createDevice(req, res, next) {
     const request = req.body;
@@ -39,10 +41,11 @@ class deviceController {
     const request = req.body;
     var query = {};
     if (request.storey) query.storey = request.storeyId;
+    if (request.block) query.block = request.blockId;
     if (request.type) query.type = request.type;
 
     try {
-      var deviceList = await Device.find(query, "name type storey brand");
+      var deviceList = await Device.find(query, "name type brand block storey");
       return res.status(200).json({ msg: "success", deviceList: deviceList });
     } catch (err) {
       err = createError(500, err);
@@ -70,12 +73,34 @@ class deviceController {
     }
   }
 
+  static async deleteDevice(req, res, next) {
+    const request = req.body;
+    try {
+      await Device.findByIdAndRemove(request.deviceId);
+      return res.status(200).json({ msg: "success" });
+    } catch (err) {
+      err = createError(500, err);
+      return next(err);
+    }
+  }
+
   static async releaseDevice(context) {
     var query = {};
     if (context.storeyId) query.storey = context.storeyId;
     if (context.blockId) query.block = context.blockId;
-    console.log(query);
     await Device.updateMany(query, { storey: null, block: null });
+  }
+
+  static async importDeviceFromXlsx(file, req, res, err) {
+    const fileInfo = {
+      name: file.filename,
+      type: file.mimetype,
+      size: file.size,
+      path: file.path
+    };
+
+    // 接收文件成功后返回数据给前端
+    return res.status(200).json({ msg: "success", fileInfo: fileInfo });
   }
 }
 export default deviceController;

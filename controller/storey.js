@@ -1,6 +1,7 @@
 import createError from "http-errors";
 import Storey from "../models/storey";
 import deviceController from "./device";
+import arrUtil from "../utils/arrUtil";
 class storeyController {
   static async createStorey(req, res, next) {
     const request = req.body;
@@ -22,7 +23,9 @@ class storeyController {
     if (request.block) query.block = request.block;
     try {
       const storeyList = await Storey.find(query, "block floor");
-      return res.status(200).json({ msg: "success", storeyList: storeyList });
+      return res
+        .status(200)
+        .json({ msg: "success", storeyList: arrUtil.groupArr(storeyList, "block") });
     } catch (err) {
       err = createError(500, err);
       return next(err);
