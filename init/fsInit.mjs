@@ -1,5 +1,7 @@
 import fs from "fs";
 
+// node --experimental-modules fsInit.mjs
+
 var initFolder = ["../upload", "../upload/tmp"];
 
 class fsInit {

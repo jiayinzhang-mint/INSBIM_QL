@@ -2,6 +2,9 @@ import createError from "http-errors";
 import Device from "../models/device";
 import xlsx from "node-xlsx";
 import path from "path";
+import fs from "fs";
+const { promisify } = require("util");
+const deleteFile = promisify(fs.unlink);
 
 class deviceController {
   static async createDevice(req, res, next) {
@@ -92,7 +95,7 @@ class deviceController {
     await Device.updateMany(query, { storey: null, block: null });
   }
 
-  static async importDeviceFromXlsx(file, req, res, err) {
+  static async importDeviceFromXlsx(file, req, res, next) {
     const fileInfo = {
       name: file.filename,
       type: file.mimetype,
@@ -102,12 +105,29 @@ class deviceController {
 
     const basePath = path.resolve(__dirname, "../upload/tmp/") + "/";
     const xlsxPath = basePath + fileInfo.name;
-    const workBook = await xlsx.parse(xlsxPath);
 
-    // 接收文件成功后返回数据给前端
-    return res
-      .status(200)
-      .json({ msg: "success", fileInfo: fileInfo, workBook: workBook });
+    try {
+      const workBook = await xlsx.parse(xlsxPath);
+      const workSheet = workBook[0].data;
+      var deviceList = [];
+      for (let index = 1; index < workSheet.length; index++) {
+        deviceList.push({
+          name: workSheet[index][0],
+          type: workSheet[index][1],
+          brand: workSheet[index][2]
+        });
+      }
+      await deleteFile(xlsxPath);
+      await Device.insertMany(deviceList);
+
+      // 接收文件成功后返回数据给前端
+      return res
+        .status(200)
+        .json({ msg: "success", fileInfo: fileInfo, deviceList: deviceList });
+    } catch (err) {
+      err = createError(500, err);
+      return next(err);
+    }
   }
 }
 export default deviceController;
