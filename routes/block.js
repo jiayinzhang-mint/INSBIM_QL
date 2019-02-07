@@ -11,6 +11,14 @@ router.post("/", auth.required, async (req, res, err) => {
   blockController.createBlock(req, res, err);
 });
 
+router.get("/", auth.required, async (req, res, err) => {
+  if (!role.isAdmin(req.payload.username)) {
+    return createError(403, "No permission.");
+  }
+  blockController.getBlock(req, res, err);
+});
+
+
 router.put("/", auth.required, async (req, res, err) => {
   if (!role.isAdmin(req.payload.username)) {
     return createError(403, "No permission.");

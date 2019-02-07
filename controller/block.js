@@ -20,6 +20,21 @@ class blockController {
     }
   }
 
+  static async getBlock(req, res, next) {
+    const request = req.query;
+    var query = {};
+    if (request.blockId) query.block = request.blockId;
+    try {
+      var blockList = await Block.find(query);
+      return res
+        .status(200)
+        .json({ msg: "success", data: { blockList: blockList } });
+    } catch (err) {
+      err = createError(500, err);
+      return next(err);
+    }
+  }
+
   static async updateBlock(req, res, next) {
     const request = req.body;
     var query = {};
