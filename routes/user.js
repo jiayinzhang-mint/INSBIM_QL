@@ -12,6 +12,13 @@ router.post("/", auth.required, async (req, res, next) => {
   userController.createUser(req, res, next);
 });
 
+router.get("/", auth.required, async (req, res, next) => {
+  if (!role.isAdmin(req.payload.username)) {
+    return createError(403, "No permission.");
+  }
+  userController.getUser(req, res, next);
+});
+
 router.put("/", auth.required, async (req, res, next) => {
   userController.updateUser(req, res, next);
 });

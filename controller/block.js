@@ -8,7 +8,7 @@ class blockController {
     const request = req.body;
     var block = new Block();
     block.name = request.name;
-    block.floorNum = request.floorNum;
+    // block.floorNum = request.floorNum;
     if (request.desc) block.desc = request.desc;
     try {
       await block.save();

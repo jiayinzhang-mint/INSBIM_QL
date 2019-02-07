@@ -15,13 +15,6 @@ router.get("/", auth.required, async (req, res, next) => {
   if (!role.isAdmin(req.payload.username)) {
     return createError(403, "No permission.");
   }
-  storeyController.getStoreyList(req, res, next);
-});
-
-router.get("/:storeyId", auth.required, async (req, res, next) => {
-  if (!role.isAdmin(req.payload.username)) {
-    return createError(403, "No permission.");
-  }
   storeyController.getStorey(req, res, next);
 });
 

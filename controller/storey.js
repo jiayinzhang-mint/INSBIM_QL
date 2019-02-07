@@ -17,29 +17,20 @@ class storeyController {
     }
   }
 
-  static async getStoreyList(req, res, next) {
+  static async getStorey(req, res, next) {
     const request = req.body;
     var query = {};
+    if (request.storeyId) query._id = request.storeyId;
     if (request.block) query.block = request.block;
     try {
-      const storeyList = await Storey.find(query, "block floor");
+      var storeyList = await Storey.find(query, "block floor");
+      if (request.key) storeyList = arrUtil.groupArr(storeyList, request.key);
       return res.status(200).json({
         msg: "success",
         data: {
-          storeyList: arrUtil.groupArr(storeyList, "block")
+          storeyList: storeyList
         }
       });
-    } catch (err) {
-      err = createError(500, err);
-      return next(err);
-    }
-  }
-
-  static async getStorey(req, res, next) {
-    const storeyId = req.params.storeyId;
-    try {
-      const storey = await Storey.findById(storeyId);
-      return res.status(200).json({ msg: "success", data: { storey: storey } });
     } catch (err) {
       err = createError(500, err);
       return next(err);

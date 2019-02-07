@@ -8,7 +8,6 @@ const blockSchema = new Schema({
     type: String,
     unique: true
   },
-  floorNum: Number,
   desc: String,
   titlePic: String,
   createTime: {

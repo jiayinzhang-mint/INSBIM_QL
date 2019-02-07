@@ -20,6 +20,7 @@ const userSchema = new Schema({
   },
   mobile: String,
   name: String,
+  role: String,
   salt: String,
   hash: String
 });
@@ -48,7 +49,7 @@ class userHandler {
   generateJWT() {
     var today = new Date();
     var exp = new Date(today);
-    exp.setDate(today.getDate() + 60);
+    exp.setDate(today.getDate() + 7);
     return jwt.sign(
       {
         id: this._id,
@@ -63,6 +64,7 @@ class userHandler {
     return {
       username: this.username,
       name: this.name,
+      role: this.role,
       mobile: this.mobile,
       token: this.generateJWT()
     };

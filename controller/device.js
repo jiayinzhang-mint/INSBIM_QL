@@ -28,22 +28,9 @@ class deviceController {
   }
 
   static async getDevice(req, res, next) {
-    const deviceId = req.params.deviceId;
-    try {
-      const device = await Device.findById(
-        deviceId,
-        "name type storey brand desc"
-      );
-      return res.status(200).json({ msg: "success", data: { device: device } });
-    } catch (err) {
-      err = createError(500, err);
-      return next(err);
-    }
-  }
-
-  static async getDeviceList(req, res, next) {
     const request = req.body;
     var query = {};
+    if (request.deviceId) query._id = request.deviceId;
     if (request.storey) query.storey = request.storeyId;
     if (request.block) query.block = request.blockId;
     if (request.type) query.type = request.type;
@@ -119,12 +106,10 @@ class deviceController {
       }
       await deleteFile(xlsxPath);
       await Device.insertMany(deviceList);
-      return res
-        .status(200)
-        .json({
-          msg: "success",
-          data: { fileInfo: fileInfo, deviceList: deviceList }
-        });
+      return res.status(200).json({
+        msg: "success",
+        data: { fileInfo: fileInfo, deviceList: deviceList }
+      });
     } catch (err) {
       err = createError(500, err);
       return next(err);
