@@ -28,7 +28,7 @@ class deviceController {
   }
 
   static async getDevice(req, res, next) {
-    const request = req.body;
+    const request = req.query;
     var query = {};
     if (request.deviceId) query._id = request.deviceId;
     if (request.storey) query.storey = request.storeyId;

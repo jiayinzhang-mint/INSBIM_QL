@@ -22,7 +22,7 @@ class userController {
   }
 
   static async getUser(req, res, next) {
-    const request = req.body;
+    const request = req.query;
     var query = {};
     if (request.userId) query._id = request.userId;
     if (request.role) query.role = request.role;

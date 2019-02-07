@@ -18,7 +18,7 @@ class storeyController {
   }
 
   static async getStorey(req, res, next) {
-    const request = req.body;
+    const request = req.query;
     var query = {};
     if (request.storeyId) query._id = request.storeyId;
     if (request.block) query.block = request.block;
