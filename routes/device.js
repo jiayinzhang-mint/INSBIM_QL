@@ -60,6 +60,7 @@ router.post(
       return createError(403, "No permission.");
     }
     var file = req.file;
+    console.log(file);
     deviceController.importDeviceFromXlsx(file, req, res, err);
   }
 );

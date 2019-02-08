@@ -37,6 +37,8 @@ class deviceController {
 
     try {
       var deviceList = await Device.find(query, "name type brand block storey");
+      if (request.key) deviceList = arrUtil.groupArr(deviceList, request.key);
+
       return res
         .status(200)
         .json({ msg: "success", data: { deviceList: deviceList } });
