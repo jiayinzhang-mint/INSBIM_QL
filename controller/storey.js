@@ -38,7 +38,7 @@ class storeyController {
   }
 
   static async deleteStorey(req, res, next) {
-    const storeyId = req.body.storeyId;
+    const storeyId = req.query.storeyId;
     try {
       // device in this storey object will be released first
       await deviceController.releaseDevice({ storeyId: storeyId });

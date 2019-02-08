@@ -60,9 +60,9 @@ class userController {
   }
 
   static async deleteUser(req, res, next) {
-    const request = req.body;
+    const request = req.query;
     try {
-      await User.findByIdAndDelete(request.id);
+      await User.findByIdAndDelete(request.userId);
       return res.status(200).json({ msg: "success" });
     } catch (err) {
       err = createError(500, err);

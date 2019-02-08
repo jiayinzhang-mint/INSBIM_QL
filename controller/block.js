@@ -53,7 +53,7 @@ class blockController {
   }
 
   static async deleteBlock(req, res, next) {
-    const blockId = req.body.blockId;
+    const blockId = req.query.blockId;
     try {
       // device in this storey object will be released first
       await deviceController.releaseDevice({ blockId: blockId });

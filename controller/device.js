@@ -69,7 +69,8 @@ class deviceController {
   }
 
   static async deleteDevice(req, res, next) {
-    const request = req.body;
+    const request = req.query;
+    console.log(request);
     try {
       await Device.findByIdAndRemove(request.deviceId);
       return res.status(200).json({ msg: "success" });
