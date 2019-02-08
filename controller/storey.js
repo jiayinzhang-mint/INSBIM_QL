@@ -6,7 +6,7 @@ class storeyController {
   static async createStorey(req, res, next) {
     const request = req.body;
     var storey = new Storey();
-    storey.block = request.block;
+    storey.block = request.blockId;
     storey.floor = Number(request.floor);
     try {
       await storey.save();

@@ -31,12 +31,15 @@ class deviceController {
     const request = req.query;
     var query = {};
     if (request.deviceId) query._id = request.deviceId;
-    if (request.storey) query.storey = request.storeyId;
+    if (request.storeyId) query.storey = request.storeyId;
     if (request.block) query.block = request.blockId;
     if (request.type) query.type = request.type;
 
     try {
-      var deviceList = await Device.find(query, "name type brand block storey");
+      var deviceList = await Device.find(
+        query,
+        "name type brand block storey createTime"
+      );
       if (request.key) deviceList = arrUtil.groupArr(deviceList, request.key);
 
       return res
@@ -55,10 +58,9 @@ class deviceController {
     if (request.type) query.type = request.type;
     if (request.type) query.desc = request.desc;
     if (request.type) query.brand = request.brand;
-    if (request.storey) {
-      query.storey = request.storeyId;
-      query.block = request.blockId;
-    }
+    query.storey = request.storeyId;
+    query.block = request.blockId;
+
     try {
       const device = await Device.findByIdAndUpdate(request.deviceId, query);
       return res.status(200).json({ msg: "success", data: { device: device } });
@@ -86,6 +88,8 @@ class deviceController {
     if (context.blockId) query.block = context.blockId;
     await Device.updateMany(query, { storey: null, block: null });
   }
+
+  static async releaseDeviceManual(req, res, next) {}
 
   static async importDeviceFromXlsx(file, req, res, next) {
     const fileInfo = {
