@@ -23,7 +23,9 @@ class storeyController {
     if (request.storeyId) query._id = request.storeyId;
     if (request.block) query.block = request.block;
     try {
-      var storeyList = await Storey.find(query, "block floor");
+      var storeyList = await Storey.find(query, "block floor", {
+        sort: "floor"
+      });
       if (request.key) storeyList = arrUtil.groupArr(storeyList, request.key);
       return res.status(200).json({
         msg: "success",
@@ -52,7 +54,8 @@ class storeyController {
 
   static async createStoreyForNewBlock(block) {
     var storeyList = [];
-    for (let index = 1; index < block.floorNum; index++) {
+    console.log(block);
+    for (let index = block.floorMin; index < block.floorMax; index++) {
       storeyList.push({
         block: block._id,
         floor: index

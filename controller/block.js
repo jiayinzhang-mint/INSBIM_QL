@@ -12,6 +12,8 @@ class blockController {
     if (request.desc) block.desc = request.desc;
     try {
       await block.save();
+      block.floorMin = request.floorMin;
+      block.floorMax = request.floorMax;
       await storeyController.createStoreyForNewBlock(block);
       return res.status(200).json({ msg: "success", data: { block: block } });
     } catch (err) {
@@ -42,7 +44,7 @@ class blockController {
     if (request.desc) query.desc = request.desc;
 
     try {
-      var block = await Block.findByIdAndUpdate(request.id, query, {
+      var block = await Block.findByIdAndUpdate(request.blockId, query, {
         new: true
       });
       return res.status(200).json({ msg: "success", data: { block: block } });
