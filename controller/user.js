@@ -1,12 +1,15 @@
 import createError from "http-errors";
 import User from "../models/user";
 import passport from "passport";
-
+import arrUtil from "../utils/arrUtil";
 class userController {
   static async createUser(req, res, next) {
-    const request = req.body;
+    const request = req.body.user;
     var user = new User();
     user.username = request.username;
+    user.role = request.role;
+    if (request.name) user.name = request.name;
+    if (request.mobile) user.mobile = request.mobile;
     var authPara = user.setPassword(request.password);
     user.salt = authPara.salt;
     user.hash = authPara.hash;
@@ -27,10 +30,14 @@ class userController {
     if (request.userId) query._id = request.userId;
     if (request.role) query.role = request.role;
     try {
-      var userList = await User.find(query, "_id username role createTime");
-      return res
-        .status(200)
-        .json({ msg: "success", data: { userList: userList } });
+      var userList = await User.find(
+        query,
+        "_id username name mobile role createTime"
+      );
+      return res.status(200).json({
+        msg: "success",
+        data: { userList: arrUtil.groupArr(userList, "role") }
+      });
     } catch (err) {
       err = createError(500, err);
       return next(err);
