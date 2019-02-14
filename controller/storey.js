@@ -56,10 +56,12 @@ class storeyController {
     var storeyList = [];
     console.log(block);
     for (let index = block.floorMin; index < block.floorMax; index++) {
-      storeyList.push({
-        block: block._id,
-        floor: index
-      });
+      if (index != 0) {
+        storeyList.push({
+          block: block._id,
+          floor: index
+        });
+      }
     }
     await Storey.insertMany(storeyList);
   }
