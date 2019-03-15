@@ -38,7 +38,7 @@ router.delete("/", auth.required, async (req, res, err) => {
 
 // func
 
-// import deviceList by xlsx
+// xlsx导入设备列表
 
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
