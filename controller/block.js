@@ -57,7 +57,7 @@ class blockController {
   static async deleteBlock(req, res, next) {
     const blockId = req.query.blockId;
     try {
-      // device in this storey object will be released first
+      // 删除大楼前，先删除所属设备，在删除楼层
       await deviceController.releaseDevice({ blockId: blockId });
       await storeyController.deleteStoreyForDelBlock(blockId);
       await Block.findByIdAndRemove(blockId);

@@ -5,9 +5,10 @@ import multer from "multer";
 import deviceController from "../controller/device";
 var router = Router();
 
-// common crud
+// common CRUD
 
 router.post("/", auth.required, async (req, res, err) => {
+  // 角色判断
   if (!role.isAdmin(req.payload.username)) {
     return createError(403, "No permission.");
   }

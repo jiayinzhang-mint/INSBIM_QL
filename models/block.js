@@ -7,9 +7,9 @@ const blockSchema = new Schema({
   name: {
     type: String,
     unique: true
-  },
-  desc: String,
-  titlePic: String,
+  }, //名称
+  desc: String, //描述
+  titlePic: String, //标题图片
   createTime: {
     type: String,
     default: Date.now()

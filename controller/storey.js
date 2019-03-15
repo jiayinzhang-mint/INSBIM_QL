@@ -3,6 +3,7 @@ import Storey from "../models/storey";
 import deviceController from "./device";
 import arrUtil from "../utils/arrUtil";
 class storeyController {
+  // CRUD
   static async createStorey(req, res, next) {
     const request = req.body;
     var storey = new Storey();
@@ -42,7 +43,7 @@ class storeyController {
   static async deleteStorey(req, res, next) {
     const storeyId = req.query.storeyId;
     try {
-      // device in this storey object will be released first
+      // 删除楼层前先释放设备
       await deviceController.releaseDevice({ storeyId: storeyId });
       await Storey.findByIdAndRemove(storeyId);
       return res.status(200).json({ msg: "success" });
@@ -52,6 +53,9 @@ class storeyController {
     }
   }
 
+  // 公用
+
+  // 获取顶层&底层，创建新楼
   static async createStoreyForNewBlock(block) {
     var storeyList = [];
     console.log(block);
@@ -66,6 +70,7 @@ class storeyController {
     await Storey.insertMany(storeyList);
   }
 
+  // 删除大楼前，要删除所属楼层
   static async deleteStoreyForDelBlock(blockId) {
     await Storey.deleteMany({ block: blockId });
   }

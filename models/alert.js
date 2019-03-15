@@ -7,9 +7,9 @@ const alertSchema = new Schema({
   title: {
     type: String,
     unique: true
-  },
-  level: Number,
-  desc: String,
+  }, //标题
+  level: Number, //等级
+  desc: String, //描述
   createTime: {
     type: String,
     default: Date.now()

@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 
 // schema
 const storeySchema = new Schema({
-  block: String,
-  floor: Number,
+  block: String, //所属大楼
+  floor: Number, //所属楼层
   createTime: {
     type: String,
     default: Date.now()

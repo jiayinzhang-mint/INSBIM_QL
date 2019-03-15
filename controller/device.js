@@ -7,11 +7,14 @@ const { promisify } = require("util");
 const deleteFile = promisify(fs.unlink);
 
 class deviceController {
+  // 创建设备
   static async createDevice(req, res, next) {
+    // 获取request值，为body
     const request = req.body;
     var device = new Device();
     device.name = request.name;
     device.type = request.type;
+    // 字段null判断
     if (request.brand) device.brand = request.brand;
     if (request.desc) device.desc = request.desc;
     if (request.storeyId) {
@@ -19,16 +22,21 @@ class deviceController {
       device.block = request.blockId;
     }
     try {
+      // 等待 创建完成
       await device.save();
+      // 返回200
       return res.status(200).json({ msg: "success", data: { device: device } });
     } catch (err) {
+      // 返回500
       err = createError(500, err);
       return next(err);
     }
   }
 
   static async getDevice(req, res, next) {
+    // 获取request值，为query
     const request = req.query;
+    // 创建查询条件数组
     var query = {};
     if (request.deviceId) query._id = request.deviceId;
     if (request.storeyId) query.storey = request.storeyId;
@@ -36,10 +44,14 @@ class deviceController {
     if (request.type) query.type = request.type;
 
     try {
+      // 等待查询返回结果
       var deviceList = await Device.find(
+        //查询条件数组
         query,
+        //查询的字段
         "name type brand block storey createTime"
       );
+      // 数据分组
       if (request.key) deviceList = arrUtil.groupArr(deviceList, request.key);
 
       return res

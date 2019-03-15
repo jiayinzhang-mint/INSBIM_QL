@@ -4,12 +4,13 @@ import passport from "passport";
 import arrUtil from "../utils/arrUtil";
 class userController {
   static async createUser(req, res, next) {
-    const request = req.body.user;
+    const request = req.body;
     var user = new User();
     user.username = request.username;
-    user.role = request.role;
+    if (request.role) user.role = request.role;
     if (request.name) user.name = request.name;
     if (request.mobile) user.mobile = request.mobile;
+    // 创建JWT盐&哈希
     var authPara = user.setPassword(request.password);
     user.salt = authPara.salt;
     user.hash = authPara.hash;
@@ -84,6 +85,7 @@ class userController {
         return next(err);
       }
       if (user) {
+        // 用户密码验证，返回token
         user.token = user.generateJWT();
         return res
           .status(200)
