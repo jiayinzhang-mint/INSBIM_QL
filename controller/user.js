@@ -35,9 +35,10 @@ class userController {
         query,
         "_id username name mobile role createTime"
       );
+      if (request.key) userList = arrUtil.groupArr(userList, request.key);
       return res.status(200).json({
         msg: "success",
-        data: { userList: arrUtil.groupArr(userList, "role") }
+        data: { userList: userList }
       });
     } catch (err) {
       err = createError(500, err);
