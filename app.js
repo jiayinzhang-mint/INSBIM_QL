@@ -40,11 +40,11 @@ import userRouter from "./routes/user";
 import blockRouter from "./routes/block";
 import storeyRouter from "./routes/storey";
 import deviceRouter from "./routes/device";
-app.use("/api/", indexRouter);
-app.use("/api/user", userRouter);
-app.use("/api/block", blockRouter);
-app.use("/api/storey", storeyRouter);
-app.use("/api/device", deviceRouter);
+app.use("/", indexRouter);
+app.use("/user", userRouter);
+app.use("/block", blockRouter);
+app.use("/storey", storeyRouter);
+app.use("/device", deviceRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
