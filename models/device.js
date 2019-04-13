@@ -14,6 +14,7 @@ const deviceSchema = new Schema({
     type: String,
     default: Date.now()
   },
+  coordinate: [],
   data: [
     {
       createTime: {

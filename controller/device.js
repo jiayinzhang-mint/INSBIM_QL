@@ -49,7 +49,7 @@ class deviceController {
         //查询条件数组
         query,
         //查询的字段
-        "name type brand block storey createTime"
+        "name type brand block storey createTime coordinate"
       );
       // 数据分组
       if (request.key) deviceList = arrUtil.groupArr(deviceList, request.key);
@@ -68,11 +68,12 @@ class deviceController {
     var query = {};
     if (request.name) query.name = request.name;
     if (request.type) query.type = request.type;
-    if (request.type) query.desc = request.desc;
-    if (request.type) query.brand = request.brand;
-    query.storey = request.storeyId;
-    query.block = request.blockId;
-
+    if (request.desc) query.desc = request.desc;
+    if (request.brand) query.brand = request.brand;
+    if (request.storeyId) query.storey = request.storeyId;
+    if (request.blockId) query.block = request.blockId;
+    if (request.coordinate)
+      query.coordinate = [request.coordinate[0], request.coordinate[1]];
     try {
       const device = await Device.findByIdAndUpdate(request.deviceId, query);
       return res.status(200).json({ msg: "success", data: { device: device } });
