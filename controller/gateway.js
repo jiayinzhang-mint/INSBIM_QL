@@ -1,5 +1,9 @@
 import createError from "http-errors";
 import fs from "fs";
+import redis from "redis";
+import bluebird from "bluebird";
+
+bluebird.promisifyAll(redis);
 
 class gatewayController {
   // node.json
@@ -15,12 +19,13 @@ class gatewayController {
       return next(err);
     }
   }
-  static async updateSetting(req, res, next) {
+  static async pushSetting(req, res, next) {
     try {
+      var rs = redis.createClient({ host: "127.0.0.1", port: "6379" });
       const request = req.body;
-      const filename = request.key;
-      console.log(filename);
-      await fs.writeFileSync(`./gateway/${filename}.json`, request.setting);
+      console.log(request);
+      const value = request.value;
+      await rs.lpush("lora_conf_start", value);
       return res.status(200).json({ msg: "success" });
     } catch (err) {
       err = createError(500, err);

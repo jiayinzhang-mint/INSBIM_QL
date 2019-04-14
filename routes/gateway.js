@@ -11,11 +11,11 @@ router.get("/", auth.required, async (req, res, err) => {
   }
   gatewayController.getSetting(req, res, err);
 });
-router.put("/", auth.required, async (req, res, err) => {
+router.post("/", auth.required, async (req, res, err) => {
   if (!role.isAdmin(req.payload.username)) {
     return createError(403, "No permission.");
   }
-  gatewayController.updateSetting(req, res, err);
+  gatewayController.pushSetting(req, res, err);
 });
 
 export default router;
