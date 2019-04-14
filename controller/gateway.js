@@ -4,8 +4,8 @@ import redis from "redis";
 import bluebird from "bluebird";
 
 var rs = redis.createClient({ host: "127.0.0.1", port: "6379" });
-redis.on("error", err => {
-  console.log("errorevent - " + redis.host + ":" + redis.port + " - " + err);
+rs.on("error", err => {
+  console.log("errorevent - " + rs.host + ":" + rs.port + " - " + err);
 });
 
 bluebird.promisifyAll(redis);
