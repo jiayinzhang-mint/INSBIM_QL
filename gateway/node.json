@@ -1,0 +1,11 @@
+{
+  "4150DC38_4702722A": {
+    "MaxValue": 1000,
+    "MinValue": 600,
+    "calibrationValue": 1,
+    "dataFrequency": 60,
+    "loraAddr": "4150DC38",
+    "nodeAddr": "4702722A",
+    "reportFrequency": 1000
+  }
+}
