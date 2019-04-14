@@ -3,6 +3,11 @@ import fs from "fs";
 import redis from "redis";
 import bluebird from "bluebird";
 
+var rs = redis.createClient({ host: "127.0.0.1", port: "6379" });
+redis.on("error", err => {
+  console.log("errorevent - " + redis.host + ":" + redis.port + " - " + err);
+});
+
 bluebird.promisifyAll(redis);
 
 class gatewayController {
@@ -21,7 +26,6 @@ class gatewayController {
   }
   static async pushSetting(req, res, next) {
     try {
-      var rs = redis.createClient({ host: "127.0.0.1", port: "6379" });
       const request = req.body;
       console.log(request);
       const value = request.value;
