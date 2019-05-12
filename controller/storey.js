@@ -1,6 +1,6 @@
 import createError from "http-errors";
 import Storey from "../models/storey";
-import deviceController from "./device";
+import deviceController from "./lora";
 import arrUtil from "../utils/arrUtil";
 class storeyController {
   // CRUD

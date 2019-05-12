@@ -1,7 +1,7 @@
 import createError from "http-errors";
 import Block from "../models/block";
 import storeyController from "../controller/storey";
-import deviceController from "../controller/device";
+import deviceController from "../controller/lora";
 
 class blockController {
   static async createBlock(req, res, next) {

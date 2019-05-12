@@ -2,7 +2,9 @@ import { Router } from "express";
 import role from "../utils/role";
 import auth from "../utils/auth";
 import multer from "multer";
-import deviceController from "../controller/device";
+import loraController from "../controller/lora";
+import createError from "http-errors";
+
 var router = Router();
 
 // common CRUD
@@ -12,28 +14,28 @@ router.post("/", auth.required, async (req, res, err) => {
   if (!role.isAdmin(req.payload.username)) {
     return createError(403, "No permission.");
   }
-  deviceController.createDevice(req, res, err);
+  loraController.createLora(req, res, err);
 });
 
 router.get("/", auth.required, async (req, res, err) => {
   if (!role.isAdmin(req.payload.username)) {
     return createError(403, "No permission.");
   }
-  deviceController.getDevice(req, res, err);
+  loraController.getLora(req, res, err);
 });
 
 router.put("/", auth.required, async (req, res, err) => {
   if (!role.isAdmin(req.payload.username)) {
     return createError(403, "No permission.");
   }
-  deviceController.updateDevice(req, res, err);
+  loraController.updateLora(req, res, err);
 });
 
 router.delete("/", auth.required, async (req, res, err) => {
   if (!role.isAdmin(req.payload.username)) {
     return createError(403, "No permission.");
   }
-  deviceController.deleteDevice(req, res, err);
+  loraController.deleteLora(req, res, err);
 });
 
 // func
@@ -62,7 +64,7 @@ router.post(
     }
     var file = req.file;
     console.log(file);
-    deviceController.importDeviceFromXlsx(file, req, res, err);
+    loraController.importloraFromXlsx(file, req, res, err);
   }
 );
 

@@ -3,19 +3,19 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 // schema
-const deviceSchema = new Schema({
-  name: String, //名称
-  type: String, //类型
+const loraSchema = new Schema({
+  loraAddr: String, //网关地址
+  serverAddr: String, // 服务器地址
+  commType: String, //通信格式
   storey: String, //所属楼层
   block: String, //所属大楼
-  brand: String, //品牌
-  desc: String, //描述
+  heartCycle: String, //心跳周期
+  port: String, //端口
   createTime: {
     type: String,
     default: Date.now()
   },
-  coordinate: [],
-  data: [
+  nodes: [
     {
       createTime: {
         type: String,
@@ -25,5 +25,5 @@ const deviceSchema = new Schema({
   ] //数据 内容不定
 });
 
-const Device = mongoose.model("device", deviceSchema);
-export default Device;
+const Lora = mongoose.model("lora_conf", loraSchema);
+export default Lora;
