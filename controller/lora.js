@@ -3,6 +3,7 @@ import Lora from "../models/lora";
 import xlsx from "node-xlsx";
 import path from "path";
 import fs from "fs";
+import arrUtil from "../utils/arrUtil";
 const { promisify } = require("util");
 const deleteFile = promisify(fs.unlink);
 
@@ -35,10 +36,7 @@ class loraController {
     const request = req.query;
     // 创建查询条件数组
     var query = {};
-    if (request.loraId) query._id = request.loraId;
-    if (request.storeyId) query.storey = request.storeyId;
-    if (request.block) query.block = request.blockId;
-    if (request.type) query.type = request.type;
+    if (request.loraAddr) query.loraAddr = request.loraAddr;
 
     try {
       // 等待查询返回结果
@@ -59,47 +57,6 @@ class loraController {
       return next(err);
     }
   }
-
-  static async updateLora(req, res, next) {
-    const request = req.body;
-    var query = {};
-    if (request.name) query.name = request.name;
-    if (request.type) query.type = request.type;
-    if (request.desc) query.desc = request.desc;
-    if (request.brand) query.brand = request.brand;
-    if (request.storeyId) query.storey = request.storeyId;
-    if (request.blockId) query.block = request.blockId;
-    if (request.coordinate)
-      query.coordinate = [request.coordinate[0], request.coordinate[1]];
-    try {
-      const lora = await lora.findByIdAndUpdate(request.loraId, query);
-      return res.status(200).json({ msg: "success", data: { lora: lora } });
-    } catch (err) {
-      err = createError(500, err);
-      return next(err);
-    }
-  }
-
-  static async deleteLora(req, res, next) {
-    const request = req.query;
-    console.log(request);
-    try {
-      await lora.findByIdAndRemove(request.loraId);
-      return res.status(200).json({ msg: "success" });
-    } catch (err) {
-      err = createError(500, err);
-      return next(err);
-    }
-  }
-
-  static async releaseLora(context) {
-    var query = {};
-    if (context.storeyId) query.storey = context.storeyId;
-    if (context.blockId) query.block = context.blockId;
-    await lora.updateMany(query, { storey: null, block: null });
-  }
-
-  static async releaseLoraManual(req, res, next) {}
 
   static async importloraFromXlsx(file, req, res, next) {
     const fileInfo = {

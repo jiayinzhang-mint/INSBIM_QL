@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 // schema
 const nodeSchema = new Schema({
-  nodeAddr: String, //节点地址
+  node_id: String, //节点地址
   loraAddr: String, //网关地址
   reportFrequency: String, //上报周期
   calibrationValue: String, //校准值
