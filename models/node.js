@@ -17,6 +17,8 @@ const nodeSchema = new Schema({
     type: String,
     default: Date.now()
   },
+  floor: String,
+  building_num: String,
   data: [
     {
       createTime: {
