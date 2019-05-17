@@ -15,4 +15,12 @@ router.get("/", auth.required, async (req, res, err) => {
   nodeController.getNode(req, res, err);
 });
 
+router.get("/data", auth.required, async (req, res, err) => {
+  if (!role.isAdmin(req.payload.username)) {
+    return createError(403, "No permission.");
+  }
+  nodeController.getNodeData(req, res, err);
+});
+
+
 export default router;
