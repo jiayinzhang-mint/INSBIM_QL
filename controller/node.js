@@ -25,7 +25,7 @@ class nodeController {
   static async getNodeData(req, res, next) {
     const request = req.query;
     var query = {};
-    if (query.node_id) query.node_id = request.node_id;
+    if (request.node_id) query.node_id = request.node_id;
     try {
       var node = await Data.find(query);
       return res.status(200).json({ msg: "success", data: node });
