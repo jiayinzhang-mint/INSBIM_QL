@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 // schema
 const nodeSchema = new Schema({
-  node_id: String, //节点地址
+  nodeAddr: String, //节点地址
   loraAddr: String, //网关地址
   reportFrequency: String, //上报周期
   calibrationValue: String, //校准值
@@ -19,14 +19,8 @@ const nodeSchema = new Schema({
   },
   floor: String,
   building_num: String,
-  data: [
-    {
-      createTime: {
-        type: String,
-        default: Date.now()
-      }
-    }
-  ] //数据 内容不定
+  data_list: [],
+  alert_list: []
 });
 
 const Node = mongoose.model("node_conf", nodeSchema);

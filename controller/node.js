@@ -8,7 +8,7 @@ class nodeController {
     console.log(request);
     var query = {};
     if (request.loraAddr) query.loraAddr = request.loraAddr;
-    if (request.node_id) query.node_id = request.node_id;
+    if (request.nodeAddr) query.nodeAddr = request.nodeAddr;
     if (request.floor) query.floor = request.floor;
     console.log(request.floor);
     try {
@@ -25,7 +25,7 @@ class nodeController {
   static async getNodeData(req, res, next) {
     const request = req.query;
     var query = {};
-    if (request.node_id) query.node_id = request.node_id;
+    if (request.nodeAddr) query.nodeAddr = request.nodeAddr;
     try {
       var node = await Data.find(query);
       return res.status(200).json({ msg: "success", data: node });
