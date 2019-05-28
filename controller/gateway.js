@@ -30,6 +30,7 @@ class gatewayController {
       const value = request.value;
       await rs.lpush("lora_conf_start", value);
       rs.blpop("lora_conf_end", (err, obj) => {
+        console.log(JSON.parse(obj));
         return res.status(200).json({ msg: "success", data: JSON.parse(obj) });
       });
     } catch (err) {
