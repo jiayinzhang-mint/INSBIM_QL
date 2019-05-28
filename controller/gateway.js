@@ -29,12 +29,12 @@ class gatewayController {
       console.log(request);
       const value = request.value;
       await rs.lpush("lora_conf_start", value);
-      // rs.pop("lora_conf_end", (err, obj) => {
-      //   console.log(JSON.parse(obj));
-      //   return res.status(200).json({ msg: "success", data: JSON.parse(obj) });
-      // });
-      return res.status(200).json({ msg: "success" });
-    } catch (err) {
+      rs.brpop("lora_conf_end",10,(err, obj) => {
+        console.log(obj);
+        return res.status(200).json({ msg: "success", data:JSON.parse(obj[1])});
+      });
+      // return res.status(200).json({ msg: "success" });
+    } catch (err) {obj
       err = createError(500, err);
       return next(err);
     }
