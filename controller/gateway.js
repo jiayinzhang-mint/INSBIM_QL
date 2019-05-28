@@ -28,26 +28,22 @@ class gatewayController {
       const request = req.body;
       console.log(request);
       const value = request.value;
+
+      // push settings
       await rs.lpush("lora_conf_start", value);
+
+      // pop message
       rs.brpop("lora_conf_end", 10, (err, obj) => {
         console.log(obj);
         if (err) {
           err = createError(500, err);
           return next(err);
         }
-        return res
-          .status(200)
-          .json({ msg: "success", data: JSON.parse(obj[1]) });
-      });
-    } catch (err) {
-      err = createError(500, err);
-      return next(err);
-    }
-  }
-  static async getMessage(req, res, next) {
-    try {
-      await rs.lpop("lora_conf_end", (err, obj) => {
-        return res.status(200).json({ msg: "success", data: JSON.parse(obj) });
+        setTimeout(() => {
+          return res
+            .status(200)
+            .json({ msg: "success", data: JSON.parse(obj[1]) });
+        }, 500);
       });
     } catch (err) {
       err = createError(500, err);

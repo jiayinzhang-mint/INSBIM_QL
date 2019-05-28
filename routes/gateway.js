@@ -21,13 +21,4 @@ router.post("/", auth.required, async (req, res, err) => {
   gatewayController.pushSetting(req, res, err);
 });
 
-router.get("/message", auth.required, async (req, res, err) => {
-  if (!role.isAdmin(req.payload.username)) {
-    return createError(403, "No permission.");
-  }
-  gatewayController.getMessage(req, res, err);
-});
-
-
-
 export default router;
