@@ -15,6 +15,7 @@ const loraSchema = new Schema({
     type: String,
     default: Date.now()
   },
+  note: String,
   nodes: [
     {
       createTime: {

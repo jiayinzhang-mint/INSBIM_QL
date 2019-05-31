@@ -10,7 +10,8 @@ const dataInfoSchema = new Schema({
   node_type: String,
   floot: String,
   gis: {},
-  data_list: []
+  data_list: [],
+  note: String
 });
 
 const DataInfo = mongoose.model("data_info", dataInfoSchema);
