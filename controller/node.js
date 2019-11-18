@@ -7,9 +7,23 @@ class nodeController {
     const request = req.query;
     console.log(request);
     var query = {};
+    
+    if (request.floor) {query.floor = request.floor;
+
+console.log(request.floor);
+    try {
+      var nodeList = await Data.find(query);
+      return res
+        .status(200)
+        .json({ msg: "success", data: { nodeList: nodeList } });
+    } catch (err) {
+      err = createError(500, err);
+      return next(err);
+    }
+   }
+   else{
     if (request.loraAddr) query.loraAddr = request.loraAddr;
     if (request.nodeAddr) query.nodeAddr = request.nodeAddr;
-    if (request.floor) query.floor = request.floor;
     console.log(request.floor);
     try {
       var nodeList = await Node.find(query);
@@ -20,6 +34,8 @@ class nodeController {
       err = createError(500, err);
       return next(err);
     }
+}
+    
   }
 
   static async getNodeData(req, res, next) {

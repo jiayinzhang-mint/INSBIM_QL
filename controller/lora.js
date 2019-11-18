@@ -44,7 +44,7 @@ class loraController {
         //查询条件数组
         query,
         //查询的字段
-        "loraAddr serverAddr commType heartCycle port block storey createTime"
+        "loraAddr serverAddr commType heartCycle port block storey createTime note"
       );
       // 数据分组
       if (request.key) loraList = arrUtil.groupArr(loraList, request.key);
